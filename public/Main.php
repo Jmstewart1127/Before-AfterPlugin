@@ -52,5 +52,3 @@ class Main
         return new Main();
     }
 }
-
-Main::main();
