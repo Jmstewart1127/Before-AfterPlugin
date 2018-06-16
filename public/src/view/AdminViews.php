@@ -10,6 +10,13 @@ require_once( plugin_dir_path( __FILE__ ) . '../model/BeforeAfter.php' );
 
 class AdminViews
 {
+    private $before_after;
+
+    public function __construct()
+    {
+        $this->before_after = new BeforeAfter();
+    }
+
     public function get_admin_view($images)
     {
         ?>
@@ -47,13 +54,11 @@ class AdminViews
 
     private function get_image_thumbnail($image)
     {
-        $before_after = new BeforeAfter();
-        echo '<td>' . $before_after->get_image_thumbnail($image) . '</td>';
+        echo '<td>' . $this->before_after->get_image_thumbnail($image) . '</td>';
     }
 
     private function get_image_url($image)
     {
-        $before_after = new BeforeAfter();
-        echo '<td>' . $before_after->get_image_url($image) . '</td>';
+        echo '<td>' . $this->before_after->get_image_url($image) . '</td>';
     }
 }

@@ -27,35 +27,29 @@ class TwentyTwenty
 {
     public function __construct()
     {
-        echo plugin_dir_path( __FILE__ );
         $this->init();
     }
 
     private function init()
     {
-        require_once( plugin_dir_path( __FILE__ ) . 'public/Main.php' );
-        require_once( plugin_dir_path( __FILE__ ) . 'public/src/model/Admin.php' );
-        require_once( plugin_dir_path( __FILE__ ) . 'public/src/model/BeforeAfter.php' );
-        require_once( plugin_dir_path( __FILE__ ) . 'public/src/controller/AdminController.php' );
-        $this->addActions();
-        $this->getAdminMenu();
-
+        $this->includes();
+        $this->getMain();
     }
 
-    private function getAdminMenu()
+    private function includes()
     {
-        return new Admin();
+        require_once( plugin_dir_path( __FILE__ ) . 'public/Main.php' );
     }
 
-    public static function test()
+    private function getMain()
+    {
+        return new Main();
+    }
+
+    public static function startPlugin()
     {
         return new TwentyTwenty();
     }
-
-    private function addActions()
-    {
-        add_action( 'inti', 'test' );
-    }
 }
 
-TwentyTwenty::test();
+TwentyTwenty::startPlugin();

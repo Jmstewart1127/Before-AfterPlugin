@@ -10,9 +10,15 @@ class BeforeAfter
 {
     public function __construct()
     {
+        $this->init();
+    }
+
+    private function init()
+    {
         register_activation_hook( __FILE__, 'create_db' );
         add_action( 'save_before_and_after', 'save_data' );
         add_action( 'insert_before_and_after', 'save_before_and_after_data' );
+        $this->create_db();
     }
 
     private function initialize_jal()
@@ -58,11 +64,13 @@ class BeforeAfter
         return new WP_Query( $query_images_args );
     }
 
-    public function get_image_url($image) {
+    public function get_image_url($image)
+    {
         return wp_get_attachment_url( $image->ID );
     }
 
-    public function get_image_thumbnail($image) {
+    public function get_image_thumbnail($image)
+    {
         return wp_get_attachment_image($image->ID, array('100', '100'), "", array( "class" => "img-responsive" ) );
     }
 
@@ -91,7 +99,7 @@ class BeforeAfter
     public function save_before_and_after_data()
     {
         global $wpdb;
-        $data = bais_get_form_data();
+        $data = $this->get_form_data();
         echo $data[0];
         $wpdb->insert(
             'wp_before_after',
@@ -112,6 +120,8 @@ class BeforeAfter
         }
     }
 
-
-
+    public static function create()
+    {
+        return new BeforeAfter();
+    }
 }

@@ -7,17 +7,18 @@
  */
 
 require_once( plugin_dir_path( __FILE__ ) . 'BeforeAfter.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'Admin.php' );
 
 class Admin {
 
     public function __construct()
     {
-        add_action('admin_menu',array($this,'pluginskeleton_menu'));
+        add_action( 'admin_menu', array($this,'pluginskeleton_menu') );
     }
+
     public function pluginskeleton_menu()
     {
-        add_menu_page( 'Application Users', 'Application Users', 'manage_options', 'application-users.php',array($this,'application_users_page'));
+        add_menu_page( 'Application Users', 'Application Users', 'manage_options',
+            'application-users.php',array($this,'application_users_page'));
     }
 
     public function application_users_page()
@@ -27,7 +28,7 @@ class Admin {
         ?>
         <div class="wrap">
         <h1>Before & After</h1>
-        <form method="post" action="<?php do_action('save_before_and_after') ?>">
+        <form method="post" action="<?php $before_after->save_data(); ?>">
             <?php settings_fields( 'settings-group' ); ?>
             <?php do_settings_sections( 'settings-group' ); ?>
             <input type="text" name="title" placeholder="Title"><br>

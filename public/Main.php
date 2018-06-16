@@ -12,12 +12,7 @@ class Main
 {
     public function __construct()
     {
-        add_action('save_before_and_after', 'save_data');
-        add_action('insert_before_and_after', 'save_before_and_after_data');
-        $this->enqueue_styles();
-        $this->enqueue_scripts();
-        new BeforeAfter();
-        new Admin();
+        $this->init();
     }
 
     private function enqueue_styles()
@@ -31,6 +26,31 @@ class Main
     {
         wp_register_script( 'jquery-event-move', plugins_url( 'assets/js/jquery.event.move.js', __FILE__ ), array( 'jquery' ), null );
         wp_register_script( 'jquery-twentytwenty', plugins_url( 'assets/js/jquery.twentytwenty.js', __FILE__ ), array( 'jquery' ), null );
+        wp_register_script( 'jquery-twentytwenty', plugins_url( 'assets/js/slider.js', __FILE__ ) );
     }
 
+    private function init()
+    {
+        $this->enqueue_styles();
+        $this->enqueue_scripts();
+        $this->getAdminMenu();
+        $this->getBeforeAfter();
+    }
+
+    private function getAdminMenu()
+    {
+        return new Admin();
+    }
+
+    private function getBeforeAfter()
+    {
+        return new BeforeAfter();
+    }
+
+    public static function main()
+    {
+        return new Main();
+    }
 }
+
+Main::main();
