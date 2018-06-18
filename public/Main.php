@@ -34,7 +34,6 @@ class Main
         $this->enqueue_styles();
         $this->enqueue_scripts();
         $this->getAdminMenu();
-        $this->getBeforeAfter();
     }
 
     private function getAdminMenu()

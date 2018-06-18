@@ -10,9 +10,12 @@ require_once( plugin_dir_path( __FILE__ ) . 'BeforeAfter.php' );
 
 class Admin {
 
+    private $before_after;
+
     public function __construct()
     {
         add_action( 'admin_menu', array($this,'pluginskeleton_menu') );
+        $this->before_after = new BeforeAfter();
     }
 
     public function pluginskeleton_menu()
@@ -23,12 +26,11 @@ class Admin {
 
     public function application_users_page()
     {
-        $before_after = new BeforeAfter();
-        $images = $before_after->get_all_images();
+        $images = $this->before_after->get_all_images();
         ?>
         <div class="wrap">
         <h1>Before & After</h1>
-        <form method="post" action="<?php $before_after->save_data(); ?>">
+        <form method="post" action="<?php do_action( 'save_before_and_after' ) ?>">
             <?php settings_fields( 'settings-group' ); ?>
             <?php do_settings_sections( 'settings-group' ); ?>
             <input type="text" name="title" placeholder="Title"><br>
@@ -60,20 +62,17 @@ class Admin {
 
     private function get_image_thumbnail($image)
     {
-        $before_after = new BeforeAfter();
-        echo '<td>' . $before_after->get_image_thumbnail($image) . '</td>';
+        echo '<td>' . $this->before_after->get_image_thumbnail($image) . '</td>';
     }
 
     private function get_image_url_before($image)
     {
-        $before_after = new BeforeAfter();
-        echo '<td><input type="radio" name="before" value="' . $before_after->get_image_url($image) . '" /></td>';
+        echo '<td><input type="radio" name="before" value="' . $this->before_after->get_image_url($image) . '" /></td>';
     }
 
     private function get_image_url_after($image)
     {
-        $before_after = new BeforeAfter();
-        echo '<td><input type="radio" name="after" value="' . $before_after->get_image_url($image) . '" /></td>';
+        echo '<td><input type="radio" name="after" value="' . $this->before_after->get_image_url($image) . '" /></td>';
     }
 
 }

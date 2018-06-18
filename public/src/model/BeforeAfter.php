@@ -13,11 +13,10 @@ class BeforeAfter
         $this->init();
     }
 
-    private function init()
+    public function init()
     {
-        register_activation_hook( __FILE__, 'create_db' );
-        add_action( 'save_before_and_after', 'save_data' );
-        add_action( 'insert_before_and_after', 'save_before_and_after_data' );
+        register_activation_hook( __FILE__, array($this, 'create_db') );
+        add_action( 'save_before_and_after', array($this, 'save_data') );
         $this->create_db();
     }
 
@@ -77,10 +76,10 @@ class BeforeAfter
     private function get_form_data()
     {
         $data = array(
-            $_POST['title'],
-            $_POST['description'],
-            $_POST['before'],
-            $_POST['after']
+            'title' => $_POST['title'],
+            'description' => $_POST['description'],
+            'before' => $_POST['before'],
+            'after' => $_POST['after']
         );
         return $data;
     }
@@ -100,18 +99,25 @@ class BeforeAfter
     {
         global $wpdb;
         $data = $this->get_form_data();
-        echo $data[0];
+        echo "sup";
         $wpdb->insert(
             'wp_before_after',
             array(
                 'time' => current_time( 'mysql' ),
-                'title' => $data[0],
-                'description' => $data[1],
-                'before_url' => $data[2],
-                'after_url' => $data[3],
+                'title' => $data['title'],
+                'description' => $data['description'],
+                'before_url' => $data['before'],
+                'after_url' => $data['after'],
             )
         );
     }
+
+//    public function reset_data() {
+//        for ($i=0; $i<count($this->get_form_data()); $i++) {
+//            $data[$i] = "";
+//        }
+//    }
+
 
     public function save_data()
     {
