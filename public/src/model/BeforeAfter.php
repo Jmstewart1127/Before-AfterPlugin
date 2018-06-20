@@ -112,13 +112,6 @@ class BeforeAfter
         );
     }
 
-//    public function reset_data() {
-//        for ($i=0; $i<count($this->get_form_data()); $i++) {
-//            $data[$i] = "";
-//        }
-//    }
-
-
     public function save_data()
     {
         if ($this->data_isset()) {

@@ -6,23 +6,19 @@
  * Time: 4:42 PM
  */
 
+require_once( plugin_dir_path( __FILE__ ) . '../model/BeforeAfter.php' );
+require_once( plugin_dir_path( __FILE__ ) . '../view/BeforeAfterViews.php' );
+
 class BeforeAfterController
 {
-    private $before_after;
     private $before_after_views;
+    private $before_after;
 
     public function __construct()
     {
-        $this->before_after = new BeforeAfter();
         $this->before_after_views = new BeforeAfterViews();
-        $this->includes();
+        $this->before_after = new BeforeAfter();
         $this->add_actions();
-    }
-
-    private function includes()
-    {
-        require_once( plugin_dir_path( __FILE__ ) . '../model/BeforeAfter.php' );
-        require_once( plugin_dir_path( __FILE__ ) . '../view/BeforeAfterViews.php' );
     }
 
     private function add_actions()

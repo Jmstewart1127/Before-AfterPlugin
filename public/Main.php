@@ -7,6 +7,7 @@
  */
 require_once 'src/model/BeforeAfter.php';
 require_once 'src/model/Admin.php';
+require_once 'src/controller/BeforeAfterController.php';
 
 class Main
 {
@@ -17,33 +18,34 @@ class Main
 
     private function enqueue_styles()
     {
-        wp_enqueue_style( 'foundation-css',  plugins_url('assets/css/foundation.css',__FILE__) , false );
-        wp_enqueue_style( 'twentytwenty-css',  plugins_url('assets/css/twentytwenty.css',__FILE__) , false );
-        wp_enqueue_style( 'foundation-nocompass-css',  plugins_url('assets/css/twentytwenty-no-compass.css',__FILE__) , false );
+        wp_enqueue_style( 'foundation-css',  plugins_url('../assets/css/foundation.css',__FILE__) , false );
+        wp_enqueue_style( 'twentytwenty-css',  plugins_url('../assets/css/twentytwenty.css',__FILE__) , false );
+        wp_enqueue_style( 'foundation-nocompass-css',  plugins_url('../assets/css/twentytwenty-no-compass.css',__FILE__) , false );
     }
 
     private function enqueue_scripts()
     {
-        wp_register_script( 'jquery-event-move', plugins_url( 'assets/js/jquery.event.move.js', __FILE__ ), array( 'jquery' ), null );
-        wp_register_script( 'jquery-twentytwenty', plugins_url( 'assets/js/jquery.twentytwenty.js', __FILE__ ), array( 'jquery' ), null );
-        wp_register_script( 'jquery-twentytwenty', plugins_url( 'assets/js/slider.js', __FILE__ ) );
+        wp_register_script( 'jquery-event-move', plugins_url( '../assets/js/jquery.event.move.js', __FILE__ ), array( 'jquery' ), null );
+        wp_register_script( 'jquery-twentytwenty', plugins_url( '../assets/js/jquery.twentytwenty.js', __FILE__ ), array( 'jquery' ), null );
+        wp_register_script( 'jquery-twentytwenty', plugins_url( '../assets/js/slider.js', __FILE__ ) );
     }
 
     private function init()
     {
         $this->enqueue_styles();
         $this->enqueue_scripts();
+        $this->initializeBeforeAfterController();
         $this->getAdminMenu();
+    }
+
+    private function initializeBeforeAfterController()
+    {
+        return new BeforeAfterController();
     }
 
     private function getAdminMenu()
     {
         return new Admin();
-    }
-
-    private function getBeforeAfter()
-    {
-        return new BeforeAfter();
     }
 
     public static function main()
